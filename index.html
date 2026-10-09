@@ -7,6 +7,17 @@
 
     <title>Diamonds Pet World - Spa & Pet Shop</title>
 
+    <meta name="description" content="Diamonds Pet World - Spa, cắt tỉa, làm đẹp, khách sạn và cửa hàng thú cưng tại 42 Lê Hồng Phong, Hội An. Mở cửa 08:00 - 21:00 mỗi ngày.">
+    <meta name="theme-color" content="#e91e73">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Diamonds Pet World - Spa & Pet Shop Hội An">
+    <meta property="og:description" content="Spa, cắt tỉa, làm đẹp, khách sạn và cửa hàng thú cưng tại Hội An. Đặt lịch và đặt hàng online.">
+    <meta property="og:locale" content="vi_VN">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐾%3C/text%3E%3C/svg%3E">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"PetStore","name":"Diamonds Pet World","telephone":"+84347654648","address":{"@type":"PostalAddress","streetAddress":"42 Lê Hồng Phong","addressLocality":"Hội An","addressCountry":"VN"},"openingHours":"Mo-Su 08:00-21:00"}
+    </script>
+
     <style>
 
         * {
@@ -431,6 +442,367 @@
             color: white;
         }
 
+        /* ================= BOOKING NÂNG CẤP ================= */
+
+        .booking-form {
+            max-width: 720px;
+            text-align: left;
+        }
+
+        .booking-form[hidden],
+        .bk-done[hidden],
+        .bk-nav button[hidden] {
+            display: none;
+        }
+
+        .bk-progress {
+            scroll-margin-top: 150px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .bk-dot {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 90px;
+            color: #aaa;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .bk-dot span {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 3px solid #e91e73;
+            background: #111;
+            color: #fff;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: .3s;
+        }
+
+        .bk-dot.active { color: #fff900; }
+        .bk-dot.active span { background: #fff900; color: #111; }
+        .bk-dot.done span { background: #e91e73; color: #fff; }
+
+        .bk-line {
+            flex: 1;
+            max-width: 80px;
+            height: 3px;
+            background: #e91e73;
+            margin-top: 18px;
+        }
+
+        .bk-step {
+            display: none;
+            gap: 16px;
+        }
+
+        .bk-step.active {
+            display: grid;
+            animation: bkFade .35s ease;
+        }
+
+        @keyframes bkFade {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: none; }
+        }
+
+        .bk-field { display: grid; gap: 6px; }
+
+        .bk-field label,
+        .bk-label {
+            font-weight: bold;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .bk-field .req, .bk-agree .req { color: #ff6b9e; }
+        .bk-opt { font-weight: normal; color: #bbb; font-size: 13px; }
+        .bk-hint { font-size: 13px; color: #bbb; }
+
+        .bk-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .bk-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+
+        .bk-pill { position: relative; cursor: pointer; }
+
+        .booking-form .bk-pill input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            border: 0;
+        }
+
+        .bk-pill span {
+            display: inline-block;
+            padding: 10px 16px;
+            border: 3px solid #e91e73;
+            border-radius: 30px;
+            background: #1b1b1b;
+            color: #fff;
+            font-weight: bold;
+            font-size: 15px;
+            transition: .2s;
+        }
+
+        .bk-pill:hover span { background: #3a0f26; }
+        .booking-form .bk-pill input:checked + span { background: #fff900; color: #111; }
+        .booking-form .bk-pill input:focus-visible + span { outline: 3px solid #fff; }
+
+        .bk-services {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .bk-service { position: relative; cursor: pointer; display: block; }
+
+        .booking-form .bk-service input {
+            position: absolute;
+            opacity: 0;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            border: 0;
+        }
+
+        .bk-card {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            height: 100%;
+            padding: 14px 40px 14px 14px;
+            border: 3px solid #e91e73;
+            background: #1b1b1b;
+            color: #fff;
+            transition: .2s;
+        }
+
+        .bk-card strong { font-size: 16px; }
+        .bk-card em { font-style: normal; font-size: 13px; color: #ffd1e3; }
+        .bk-service:hover .bk-card { background: #3a0f26; }
+
+        .booking-form .bk-service input:checked + .bk-card {
+            background: #fff900;
+            color: #111;
+            box-shadow: 0 0 0 3px #e91e73;
+        }
+
+        .booking-form .bk-service input:checked + .bk-card em { color: #7a1040; }
+
+        .booking-form .bk-service input:checked + .bk-card::after {
+            content: "✓";
+            position: absolute;
+            top: 10px;
+            right: 14px;
+            font-weight: bold;
+            font-size: 20px;
+            color: #e91e73;
+        }
+
+        .booking-form .bk-service input:focus-visible + .bk-card { outline: 3px solid #fff; }
+
+        .bk-error {
+            display: none;
+            color: #ff8fb8;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .bk-error.show { display: block; }
+
+        .bk-estimate {
+            display: none;
+            padding: 12px 15px;
+            border: 2px dashed #fff900;
+            color: #fff900;
+            font-weight: bold;
+        }
+        .bk-estimate.show { display: block; }
+
+        .bk-hotel {
+            display: none;
+            padding: 14px;
+            border: 2px dashed #e91e73;
+        }
+        .bk-hotel.show { display: block; }
+
+        .bk-summary {
+            display: grid;
+            gap: 6px;
+            padding: 14px;
+            background: #1b1b1b;
+            border: 2px solid #e91e73;
+            font-size: 15px;
+            color: #fff;
+        }
+        .bk-summary div { display: flex; gap: 8px; flex-wrap: wrap; }
+        .bk-summary b { color: #fff900; }
+
+        .bk-agree {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+            color: #ddd;
+            cursor: pointer;
+        }
+
+        .booking-form .bk-agree input {
+            width: 20px;
+            height: 20px;
+            padding: 0;
+            margin-top: 2px;
+            flex: none;
+            accent-color: #e91e73;
+        }
+
+        .bk-secure { font-size: 13px; color: #bbb; }
+
+        .bk-nav { display: flex; gap: 12px; margin-top: 5px; }
+        .bk-nav button { flex: 1; }
+        .booking-form .bk-secondary { background: #222; color: #fff; }
+        .booking-form .bk-secondary:hover { background: #e91e73; }
+        .booking-form button:disabled { opacity: .7; cursor: wait; }
+
+        /* Màn hình xác nhận */
+        .bk-done {
+            max-width: 620px;
+            margin: auto;
+            padding: 30px 22px;
+            background: #1b1b1b;
+            border: 3px solid #e91e73;
+            animation: bkFade .5s ease;
+        }
+
+        .bk-check {
+            width: 74px;
+            height: 74px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            background: #2ecc71;
+            color: #fff;
+            font-size: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bk-done h3 { color: #fff900; font-size: 26px; margin-bottom: 14px; }
+
+        .bk-code {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 16px;
+            border: 2px dashed #fff900;
+            font-size: 18px;
+        }
+
+        .bk-done .bk-summary { text-align: left; margin-bottom: 14px; }
+        .bk-done-note { font-size: 15px; color: #ddd; }
+
+        .bk-done-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .bk-done-actions .bk-link,
+        .bk-done-actions button {
+            padding: 14px 20px;
+            background: #fff900;
+            color: #111;
+            border: 3px solid #e91e73;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .bk-done-actions .bk-link:hover,
+        .bk-done-actions button:hover { background: #e91e73; color: #fff; }
+
+        @media (max-width: 600px) {
+            .bk-row, .bk-services { grid-template-columns: 1fr; }
+            .bk-dot { width: 70px; font-size: 11px; }
+            .bk-done h3 { font-size: 21px; }
+        }
+
+        /* ================= GIỎ HÀNG & THANH TOÁN ================= */
+        .cart-badge{display:inline-block;margin-left:4px;padding:2px 8px;border-radius:999px;background:#e91e73;color:#fff;font-size:12px}
+        .buy-now{background:#e91e73!important;color:#fff;margin-top:8px}
+        body.shop-lock{overflow:hidden}
+        .shop-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:3000;opacity:0;pointer-events:none;transition:.25s}
+        .shop-overlay.show{opacity:1;pointer-events:auto}
+        .cart-drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:3100;display:flex;flex-direction:column;transform:translateX(105%);transition:.3s;border-left:4px solid #111}
+        .cart-drawer.show{transform:none}
+        .cd-head,.co-head{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:#e91e73;color:#fff;font-size:18px}
+        .cd-x{background:none;border:0;color:#fff;font-size:22px;cursor:pointer}
+        .cd-ship{padding:10px 16px;background:#fff0f7;font-size:14px}
+        .cd-bar{height:8px;background:#eee;border-radius:9px;margin-top:6px;overflow:hidden}
+        .cd-bar i{display:block;height:100%;background:#2ecc71;width:0;transition:.3s}
+        .cd-all{display:flex;gap:8px;align-items:center;padding:10px 16px;border-bottom:1px solid #eee;font-weight:bold;cursor:pointer}
+        .cd-list{flex:1;overflow-y:auto;padding:0 16px}
+        .cd-item{display:grid;grid-template-columns:auto 56px 1fr auto;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid #eee}
+        .cd-thumb{width:56px;height:56px;background:#fff0f7;border:2px solid #111;display:flex;align-items:center;justify-content:center;font-size:30px;overflow:hidden}
+        .cd-thumb img{width:100%;height:100%;object-fit:cover}
+        .cd-name{font-weight:bold;font-size:14px}.cd-price{color:#e91e73;font-weight:bold;font-size:14px}
+        .cd-qty{display:flex;align-items:center;margin-top:6px}
+        .cd-qty button{width:28px;height:28px;border:2px solid #111;background:#fff;font-weight:bold;cursor:pointer}
+        .cd-qty span{min-width:34px;text-align:center;font-weight:bold}
+        .cd-del{background:none;border:0;font-size:20px;cursor:pointer}
+        .cd-empty{text-align:center;padding:50px 10px;color:#666}.cd-empty div{font-size:64px}
+        .cd-foot{padding:14px 16px;border-top:3px solid #111;background:#fffbe0}
+        .cd-total{display:flex;justify-content:space-between;font-size:18px;margin-bottom:10px}
+        .cd-buy,.co-submit{width:100%;padding:14px;background:#e91e73;color:#fff;border:3px solid #111;font-size:17px;font-weight:bold;cursor:pointer}
+        .cd-buy:disabled,.co-submit:disabled{background:#bbb;cursor:not-allowed}
+        .cd-more{display:block;text-align:center;margin-top:10px;color:#111;font-size:14px}
+        .co-modal{position:fixed;inset:0;z-index:3200;display:flex;justify-content:center;align-items:flex-start;overflow-y:auto;background:rgba(0,0,0,.6);padding:20px 10px}
+        .co-modal[hidden]{display:none}
+        .co-box{width:min(620px,100%);background:#fff;border:4px solid #111}
+        .co-form,.co-done{padding:16px;display:grid;gap:12px}
+        .co-form h4{margin-top:6px;color:#e91e73;font-size:17px}
+        .co-form input[type=text],.co-form input[type=tel],.co-form textarea{width:100%;padding:12px;border:3px solid #e91e73;font-size:16px}
+        .co-form textarea{height:70px;resize:none}
+        .co-pills{display:flex;flex-wrap:wrap;gap:10px}
+        .co-pill{position:relative;cursor:pointer}
+        .co-pill input{position:absolute;opacity:0;width:1px;height:1px}
+        .co-pill span{display:inline-block;padding:10px 14px;border:3px solid #e91e73;border-radius:30px;font-weight:bold;font-size:15px}
+        .co-pill input:checked+span{background:#fff900}
+        .co-pill input:focus-visible+span{outline:3px solid #111}
+        .co-note{font-size:14px;color:#555;padding:10px;background:#fff0f7;border:2px dashed #e91e73}
+        .co-row{display:flex;justify-content:space-between;gap:10px;font-size:15px;padding:4px 0}
+        .co-row.big{font-size:19px;font-weight:bold;color:#e91e73;border-top:2px solid #111;margin-top:6px;padding-top:10px}
+        .co-vrow{display:flex;gap:8px}.co-vrow button{padding:0 16px;border:3px solid #111;background:#fff900;font-weight:bold;cursor:pointer}
+        .co-done{text-align:center}.co-done h3{color:#e91e73;font-size:24px}
+        .co-code{display:inline-block;padding:8px 16px;border:2px dashed #e91e73;font-size:18px;margin:auto}
+        .co-done img.qr{max-width:260px;width:100%;margin:auto;border:3px solid #111}
+        .co-acts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+        .co-acts a,.co-acts button{padding:12px 18px;background:#fff900;border:3px solid #111;font-weight:bold;color:#111;text-decoration:none;cursor:pointer;font-size:15px}
+        .toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,30px);background:#111;color:#fff;padding:12px 18px;border-radius:30px;z-index:3300;opacity:0;pointer-events:none;transition:.3s;font-size:15px;max-width:92%;text-align:center}
+        .toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+        .toast button{margin-left:8px;background:#fff900;border:0;border-radius:20px;padding:4px 12px;font-weight:bold;cursor:pointer}
+        .float-contact{position:fixed;left:16px;bottom:20px;display:flex;flex-direction:column;gap:10px;z-index:1900}
+        .float-contact a{width:54px;height:54px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+        .fc-call{background:#2ecc71}.fc-zalo{background:#0068ff;font-size:15px!important;font-weight:bold}
+
         /* ================= CONTACT ================= */
 
         .contact {
@@ -852,6 +1224,7 @@ nav a.menu-click {
         <a href="#about">GIỚI THIỆU</a>
         <a href="#booking">ĐẶT LỊCH</a>
         <a href="#contact">LIÊN HỆ</a>
+        <a href="#" id="navCart">🛒 GIỎ HÀNG <span class="cart-badge" id="cartBadge">0</span></a>
 
     </nav>
 
@@ -1204,77 +1577,224 @@ nav a.menu-click {
     </p>
 
 
-    <form class="booking-form" onsubmit="bookingSuccess(event)">
+    <form class="booking-form" id="bookingForm" onsubmit="bookingSuccess(event)" novalidate>
 
-        <input type="hidden" name="_subject" value="🐾 Lịch hẹn mới - Diamonds Pet World">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
         <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
 
-        <input
-            type="text"
-            name="Tên khách hàng"
-            placeholder="Tên của bạn"
-            required
-        >
-
-        <input
-            type="tel"
-            name="Số điện thoại"
-            placeholder="Số điện thoại"
-            required
-        >
-
-        <input
-            type="text"
-            name="Tên thú cưng"
-            placeholder="Tên thú cưng"
-            required
-        >
-
-        <select name="Dịch vụ" required>
-
-            <option value="">
-                -- Chọn dịch vụ --
-            </option>
-
-            <option>
-                Cắt tỉa & tạo kiểu
-            </option>
-
-            <option>
-                Tắm & Spa
-            </option>
-
-            <option>
-                Làm đẹp
-            </option>
-
-            <option>
-                Khách sạn thú cưng
-            </option>
-
-        </select>
+        <!-- THANH TIẾN ĐỘ -->
+        <div class="bk-progress">
+            <div class="bk-dot active" data-step="1"><span>1</span><small>Thông tin</small></div>
+            <div class="bk-line"></div>
+            <div class="bk-dot" data-step="2"><span>2</span><small>Thú cưng & dịch vụ</small></div>
+            <div class="bk-line"></div>
+            <div class="bk-dot" data-step="3"><span>3</span><small>Ngày giờ</small></div>
+        </div>
 
 
-        <input
-            type="date"
-            name="Ngày hẹn"
-            required
-        >
+        <!-- ============ BƯỚC 1: THÔNG TIN CỦA BẠN ============ -->
+        <div class="bk-step active" data-step="1">
+
+            <div class="bk-field">
+                <label for="bkName">Họ và tên <span class="req">*</span></label>
+                <input id="bkName" type="text" name="Tên khách hàng" placeholder="VD: Nguyễn Văn A" autocomplete="name" required>
+            </div>
+
+            <div class="bk-field">
+                <label for="bkPhone">Số điện thoại <span class="req">*</span></label>
+                <input id="bkPhone" type="tel" name="Số điện thoại" placeholder="VD: 0912345678" inputmode="tel" autocomplete="tel" required>
+                <span class="bk-hint">Shop sẽ gọi hoặc nhắn tin để xác nhận lịch hẹn của bạn.</span>
+            </div>
+
+            <div class="bk-field">
+                <label for="bkEmail">Email <span class="bk-opt">(không bắt buộc)</span></label>
+                <input id="bkEmail" type="email" name="email" placeholder="VD: banan@gmail.com" autocomplete="email">
+            </div>
+
+            <div class="bk-field">
+                <span class="bk-label">Cách liên hệ ưa thích</span>
+                <div class="bk-pills">
+                    <label class="bk-pill"><input type="radio" name="Cách liên hệ ưa thích" value="Gọi điện" checked><span>📞 Gọi điện</span></label>
+                    <label class="bk-pill"><input type="radio" name="Cách liên hệ ưa thích" value="Zalo"><span>💬 Zalo</span></label>
+                    <label class="bk-pill"><input type="radio" name="Cách liên hệ ưa thích" value="Nhắn tin SMS"><span>✉️ Nhắn tin</span></label>
+                </div>
+            </div>
+
+        </div>
 
 
-        <textarea
-            name="Ghi chú"
-            placeholder="Ghi chú thêm cho shop..."
-        ></textarea>
+        <!-- ============ BƯỚC 2: THÚ CƯNG & DỊCH VỤ ============ -->
+        <div class="bk-step" data-step="2">
+
+            <div class="bk-field">
+                <span class="bk-label">Loại thú cưng <span class="req">*</span></span>
+                <div class="bk-pills">
+                    <label class="bk-pill"><input type="radio" name="Loại thú cưng" value="Chó" required><span>🐶 Chó</span></label>
+                    <label class="bk-pill"><input type="radio" name="Loại thú cưng" value="Mèo"><span>🐱 Mèo</span></label>
+                    <label class="bk-pill"><input type="radio" name="Loại thú cưng" value="Khác"><span>🐾 Khác</span></label>
+                </div>
+            </div>
+
+            <div class="bk-row">
+                <div class="bk-field">
+                    <label for="bkPet">Tên thú cưng <span class="req">*</span></label>
+                    <input id="bkPet" type="text" name="Tên thú cưng" placeholder="VD: Lốp" required>
+                </div>
+                <div class="bk-field">
+                    <label for="bkBreed">Giống</label>
+                    <input id="bkBreed" type="text" name="Giống" placeholder="VD: Poodle, Corgi, mèo Anh lông ngắn">
+                </div>
+            </div>
+
+            <div class="bk-row">
+                <div class="bk-field">
+                    <label for="bkWeight">Cân nặng <span class="req">*</span></label>
+                    <select id="bkWeight" name="Cân nặng" required>
+                        <option value="">-- Chọn cân nặng --</option>
+                        <option>Dưới 3kg</option>
+                        <option>3 - 5kg</option>
+                        <option>5 - 10kg</option>
+                        <option>10 - 20kg</option>
+                        <option>Trên 20kg</option>
+                        <option>Chưa rõ</option>
+                    </select>
+                </div>
+                <div class="bk-field">
+                    <label for="bkAge">Tuổi</label>
+                    <input id="bkAge" type="text" name="Tuổi" placeholder="VD: 2 tuổi, 6 tháng">
+                </div>
+            </div>
+
+            <div class="bk-row">
+                <div class="bk-field">
+                    <label for="bkGender">Giới tính</label>
+                    <select id="bkGender" name="Giới tính">
+                        <option value="">-- Chọn --</option>
+                        <option>Đực</option>
+                        <option>Cái</option>
+                    </select>
+                </div>
+                <div class="bk-field">
+                    <label for="bkQty">Số lượng thú cưng</label>
+                    <input id="bkQty" type="number" name="Số lượng thú cưng" min="1" max="10" value="1">
+                </div>
+            </div>
+
+            <div class="bk-field">
+                <span class="bk-label">Lưu ý về sức khỏe & tính cách</span>
+                <div class="bk-pills">
+                    <label class="bk-pill"><input type="checkbox" name="Lưu ý về thú cưng" value="Đã tiêm phòng đầy đủ"><span>💉 Đã tiêm phòng</span></label>
+                    <label class="bk-pill"><input type="checkbox" name="Lưu ý về thú cưng" value="Chưa tiêm phòng"><span>Chưa tiêm phòng</span></label>
+                    <label class="bk-pill"><input type="checkbox" name="Lưu ý về thú cưng" value="Hay cắn / dữ"><span>⚠️ Hay cắn / dữ</span></label>
+                    <label class="bk-pill"><input type="checkbox" name="Lưu ý về thú cưng" value="Sợ máy sấy / tiếng ồn"><span>🔊 Sợ máy sấy</span></label>
+                    <label class="bk-pill"><input type="checkbox" name="Lưu ý về thú cưng" value="Dị ứng"><span>Dị ứng</span></label>
+                    <label class="bk-pill"><input type="checkbox" name="Lưu ý về thú cưng" value="Bệnh về da"><span>Bệnh về da</span></label>
+                </div>
+            </div>
+
+            <div class="bk-field">
+                <span class="bk-label">Dịch vụ cần làm <span class="req">*</span> <span class="bk-opt">(chọn được nhiều)</span></span>
+                <div class="bk-services">
+                    <label class="bk-service">
+                        <input type="checkbox" name="Dịch vụ" value="Cắt tỉa & tạo kiểu">
+                        <span class="bk-card"><strong>✂️ Cắt tỉa & tạo kiểu</strong><em></em></span>
+                    </label>
+                    <label class="bk-service">
+                        <input type="checkbox" name="Dịch vụ" value="Tắm & Spa">
+                        <span class="bk-card"><strong>🛁 Tắm & Spa</strong><em></em></span>
+                    </label>
+                    <label class="bk-service">
+                        <input type="checkbox" name="Dịch vụ" value="Làm đẹp">
+                        <span class="bk-card"><strong>💅 Làm đẹp</strong><em></em></span>
+                    </label>
+                    <label class="bk-service">
+                        <input type="checkbox" name="Dịch vụ" value="Khách sạn thú cưng">
+                        <span class="bk-card"><strong>🏨 Khách sạn thú cưng</strong><em></em></span>
+                    </label>
+                </div>
+                <div class="bk-error" id="bkServiceErr">Vui lòng chọn ít nhất một dịch vụ.</div>
+                <div class="bk-estimate" id="bkEstimate"></div>
+            </div>
+
+        </div>
 
 
-        <button type="submit">
-            🐾 XÁC NHẬN ĐẶT LỊCH
-        </button>
+        <!-- ============ BƯỚC 3: NGÀY GIỜ & XÁC NHẬN ============ -->
+        <div class="bk-step" data-step="3">
+
+            <div class="bk-row">
+                <div class="bk-field">
+                    <label for="bkDate">Ngày hẹn <span class="req">*</span></label>
+                    <input id="bkDate" type="date" name="Ngày hẹn" required>
+                </div>
+                <div class="bk-field">
+                    <label for="bkTime">Khung giờ <span class="req">*</span></label>
+                    <select id="bkTime" name="Khung giờ" required></select>
+                    <span class="bk-hint">Shop mở cửa 08:00 - 21:00 mỗi ngày.</span>
+                </div>
+            </div>
+
+            <div class="bk-hotel" id="bkHotel">
+                <div class="bk-field">
+                    <label for="bkDateOut">🏨 Ngày trả thú cưng (khách sạn) <span class="req">*</span></label>
+                    <input id="bkDateOut" type="date" name="Ngày trả">
+                    <span class="bk-hint" id="bkNights"></span>
+                </div>
+            </div>
+
+            <div class="bk-field">
+                <label for="bkNote">Ghi chú thêm cho shop</label>
+                <textarea id="bkNote" name="Ghi chú" placeholder="VD: bé hơi nhát, muốn cắt tỉa gọn gàng..."></textarea>
+            </div>
+
+            <div class="bk-field">
+                <span class="bk-label">Kiểm tra lại thông tin</span>
+                <div class="bk-summary" id="bkSummary"></div>
+            </div>
+
+            <label class="bk-agree">
+                <input type="checkbox" required>
+                <span>Tôi xác nhận thông tin trên là chính xác và đồng ý để Diamonds Pet World liên hệ xác nhận lịch hẹn.</span>
+            </label>
+
+            <div class="bk-secure">🔒 Thông tin của bạn chỉ được dùng để xác nhận lịch hẹn.</div>
+
+        </div>
+
+
+        <div class="bk-error" id="bkSubmitErr">😿 Gửi không thành công. Vui lòng thử lại hoặc gọi trực tiếp cho shop: 0347 654 648.</div>
+
+        <div class="bk-nav">
+            <button type="button" id="bkBack" class="bk-secondary" hidden>← QUAY LẠI</button>
+            <button type="button" id="bkNext">TIẾP TỤC →</button>
+            <button type="submit" id="bkSubmit" hidden>🐾 XÁC NHẬN ĐẶT LỊCH</button>
+        </div>
 
     </form>
+
+
+    <!-- MÀN HÌNH XÁC NHẬN SAU KHI ĐẶT LỊCH -->
+    <div class="bk-done" id="bookingDone" hidden>
+
+        <div class="bk-check">✓</div>
+
+        <h3>Cảm ơn bạn! Bé <span id="bkDonePet"></span> đã được đặt lịch 🎉</h3>
+
+        <div class="bk-code">Mã lịch hẹn: <strong id="bkDoneCode"></strong></div>
+
+        <div class="bk-summary" id="bkDoneSummary"></div>
+
+        <div class="bk-done-note">
+            Shop sẽ liên hệ xác nhận qua số <strong id="bkDonePhone"></strong>. Bạn nhớ giữ lại mã lịch hẹn nhé.
+        </div>
+
+        <div class="bk-done-actions">
+            <a id="bkCalLink" class="bk-link" href="#" target="_blank" rel="noopener">📅 Thêm vào Google Calendar</a>
+            <button type="button" onclick="bkReset()">➕ ĐẶT LỊCH THÊM</button>
+        </div>
+
+    </div>
 
 </section>
 
@@ -1311,7 +1831,7 @@ nav a.menu-click {
 
             <strong>📞 ĐIỆN THOẠI</strong>
 
-            0347 654 648
+            <a href="tel:0347654648" style="color:inherit;font-weight:bold">0347 654 648</a>
 
         </div>
 
@@ -1512,111 +2032,753 @@ document.querySelectorAll(".btn, .buy, .booking-form button").forEach(button => 
 /* =========================
    THÊM GIỎ HÀNG
 ========================= */
-function addCart(product, clickEvent) {
-    cartCount++;
-    cartItems.push(product);
+/* =========================
+   CỬA HÀNG: GIỎ HÀNG & THANH TOÁN
+========================= */
 
-    const count = document.getElementById("cartCount");
-    if (count) count.innerText = cartCount;
+/* ====== CẤU HÌNH CỦA SHOP (sửa tại đây) ====== */
+const SHOP = {
+    phone: "0347654648",
+    zalo: "0347654648",        // đổi nếu số Zalo khác số điện thoại
+    shipFee: null,             // phí ship (đồng). null = shop báo phí khi xác nhận đơn
+    freeShipFrom: 0,           // miễn phí ship từ ... đồng (0 = không dùng)
+    bank: { bankId: "", account: "", accountName: "" }   // VD: bankId "VCB" (để trống = chưa bật QR)
+};
 
-    const cart = document.querySelector(".cart");
+/* Mã giảm giá. Lưu ý: nằm trong code web nên ai cũng xem được. Bỏ dấu // để bật. */
+const VOUCHERS = {
+    // "PET10":   { type: "percent", value: 10, min: 0 },
+    // "GIAM20K": { type: "amount", value: 20000, min: 200000 },
+    // "FREESHIP": { type: "freeship", min: 0 }
+};
 
-    if (cart) {
-        cart.classList.remove("shake");
-        void cart.offsetWidth;
-        cart.classList.add("shake");
+/* Ảnh sản phẩm thật: "Tên sản phẩm": "đường dẫn ảnh". Chưa có ảnh thì dùng emoji. */
+const PRODUCT_IMAGES = {
+    // "Thức ăn cho chó": "images/thuc-an-cho.jpg",
+};
+
+const $ = id => document.getElementById(id);
+const money = n => n.toLocaleString("vi-VN") + "đ";
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+/* Lấy danh sách sản phẩm từ chính trang web */
+const CATALOG = {};
+document.querySelectorAll(".product").forEach(el => {
+    const name = el.querySelector("h3").textContent.trim();
+    const price = parseInt(el.querySelector(".product-price").textContent.replace(/\D/g, ""), 10) || 0;
+    const imgBox = el.querySelector(".product-img");
+    const emoji = imgBox.textContent.trim();
+    const img = PRODUCT_IMAGES[name] || "";
+    CATALOG[name] = { name, price, emoji, img };
+
+    if (img) {
+        imgBox.textContent = "";
+        const im = document.createElement("img");
+        im.src = img; im.alt = name;
+        im.style.cssText = "width:100%;height:100%;object-fit:cover";
+        imgBox.appendChild(im);
     }
 
-    if (clickEvent) createRipple(clickEvent.currentTarget, clickEvent);
+    const buy = el.querySelector(".buy");
+    const now = document.createElement("button");
+    now.className = "buy buy-now";
+    now.textContent = "⚡ MUA NGAY";
+    now.addEventListener("click", () => buyNow(name));
+    buy.after(now);
+});
 
-    createPetEffect(
-        window.innerWidth - 80,
-        window.innerHeight - 90,
-        "🛒"
-    );
+/* Giao diện giỏ hàng / thanh toán */
+document.body.insertAdjacentHTML("beforeend", `
+<div class="shop-overlay" id="shopOverlay"></div>
 
-    setTimeout(() => {
-        alert("🐾 Đã thêm " + product + " vào giỏ hàng!");
-    }, 250);
+<aside class="cart-drawer" id="cartDrawer" aria-label="Giỏ hàng">
+  <div class="cd-head"><strong>🛒 Giỏ hàng (<span id="cdCount">0</span>)</strong><button class="cd-x" id="cdClose" aria-label="Đóng">✕</button></div>
+  <div class="cd-ship" id="cdShip" hidden></div>
+  <label class="cd-all" id="cdAllWrap"><input type="checkbox" id="cdAll"> Chọn tất cả</label>
+  <div class="cd-list" id="cdList"></div>
+  <div class="cd-foot">
+    <div class="cd-total"><span>Tạm tính:</span><b id="cdTotal">0đ</b></div>
+    <button class="cd-buy" id="cdBuy" disabled>MUA HÀNG (0)</button>
+    <a href="#products" class="cd-more" id="cdMore">← Tiếp tục mua sắm</a>
+  </div>
+</aside>
+
+<div class="co-modal" id="checkout" hidden>
+  <div class="co-box">
+    <div class="co-head"><strong>🧾 Thanh toán</strong><button class="cd-x" id="coClose" aria-label="Đóng">✕</button></div>
+
+    <form class="co-form" id="coForm">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+
+      <h4>📍 Thông tin nhận hàng</h4>
+      <div class="co-pills">
+        <label class="co-pill"><input type="radio" name="Hình thức nhận hàng" value="Giao tận nơi" checked><span>🚚 Giao tận nơi</span></label>
+        <label class="co-pill"><input type="radio" name="Hình thức nhận hàng" value="Nhận tại cửa hàng"><span>🏪 Nhận tại cửa hàng</span></label>
+      </div>
+      <input type="text" name="Họ tên" id="coName" placeholder="Họ và tên *" autocomplete="name" required>
+      <input type="tel" name="Số điện thoại" id="coPhone" placeholder="Số điện thoại *" inputmode="tel" autocomplete="tel" required>
+      <input type="text" name="Địa chỉ" id="coAddr" placeholder="Địa chỉ nhận hàng (số nhà, đường, phường/xã, quận/huyện, tỉnh/thành) *" autocomplete="street-address" required>
+      <div class="co-note" id="coPickup" hidden>🏪 Nhận tại: 42 Lê Hồng Phong, Hội An (08:00 - 21:00). Không mất phí ship.</div>
+      <textarea name="Ghi chú" placeholder="Ghi chú cho shop (không bắt buộc)"></textarea>
+
+      <h4>💳 Phương thức thanh toán</h4>
+      <div class="co-pills">
+        <label class="co-pill"><input type="radio" name="Thanh toán" value="Thanh toán khi nhận hàng (COD)" checked><span>💵 Khi nhận hàng (COD)</span></label>
+        <label class="co-pill"><input type="radio" name="Thanh toán" value="Chuyển khoản ngân hàng"><span>🏦 Chuyển khoản</span></label>
+      </div>
+      <div class="co-note" id="coBank" hidden></div>
+
+      <div id="coVBox">
+        <h4>🎟️ Mã giảm giá</h4>
+        <div class="co-vrow"><input type="text" id="coVoucher" placeholder="Nhập mã giảm giá" autocomplete="off"><button type="button" id="coApply">ÁP DỤNG</button></div>
+        <div id="coVMsg" style="font-size:14px;margin-top:6px"></div>
+      </div>
+
+      <h4>🧾 Đơn hàng của bạn</h4>
+      <div id="coItems"></div>
+      <div id="coSums"></div>
+
+      <div class="bk-error" id="coErr">😿 Gửi đơn không thành công. Vui lòng thử lại hoặc gọi shop: 0347 654 648.</div>
+      <button type="submit" class="co-submit" id="coSubmit">ĐẶT HÀNG</button>
+    </form>
+
+    <div class="co-done" id="coDone" hidden></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="float-contact">
+  <a class="fc-call" href="tel:${SHOP.phone}" title="Gọi ngay" aria-label="Gọi ngay">📞</a>
+  <a class="fc-zalo" href="https://zalo.me/${SHOP.zalo}" target="_blank" rel="noopener" title="Chat Zalo" aria-label="Chat Zalo">Zalo</a>
+</div>
+`);
+
+/* Chuyển thanh "GIỎ HÀNG" nổi thành tóm tắt */
+const floatCart = document.querySelector(".cart");
+floatCart.innerHTML = '🛒 <span id="cartCount">0</span> món • <span id="cartTotal">0đ</span>';
+floatCart.setAttribute("onclick", "openCart()");
+
+/* Dữ liệu giỏ hàng (lưu lại khi tải lại trang) */
+let cartData = [];
+try {
+    cartData = (JSON.parse(localStorage.getItem("dpw_cart")) || []).filter(i => CATALOG[i.name] && i.qty > 0);
+} catch (e) { cartData = []; }
+
+function saveCart() {
+    try { localStorage.setItem("dpw_cart", JSON.stringify(cartData)); } catch (e) {}
 }
 
-/* =========================
-   XEM GIỎ HÀNG
-========================= */
-function showCart() {
-    const cart = document.querySelector(".cart");
+function renderCart() {
+    const count = cartData.reduce((s, i) => s + i.qty, 0);
+    const picked = cartData.filter(i => i.on);
+    const pickedQty = picked.reduce((s, i) => s + i.qty, 0);
+    const total = picked.reduce((s, i) => s + CATALOG[i.name].price * i.qty, 0);
+    const all = cartData.reduce((s, i) => s + CATALOG[i.name].price * i.qty, 0);
 
-    if (cart) {
-        cart.classList.remove("shake");
-        void cart.offsetWidth;
-        cart.classList.add("shake");
-    }
+    $("cartCount").textContent = count;
+    $("cartTotal").textContent = money(all);
+    $("cartBadge").textContent = count;
+    $("cdCount").textContent = count;
+    $("cdTotal").textContent = money(total);
+    $("cdBuy").textContent = "MUA HÀNG (" + pickedQty + ")";
+    $("cdBuy").disabled = pickedQty === 0;
+    $("cdAllWrap").style.display = cartData.length ? "flex" : "none";
+    $("cdAll").checked = cartData.length > 0 && cartData.every(i => i.on);
 
-    if (cartItems.length === 0) {
-        alert("🛒 Giỏ hàng đang trống!");
-        return;
-    }
+    const ship = $("cdShip");
+    if (SHOP.freeShipFrom > 0 && cartData.length) {
+        const left = SHOP.freeShipFrom - total;
+        ship.hidden = false;
+        ship.innerHTML = (left > 0
+            ? "🚚 Mua thêm <b>" + money(left) + "</b> để được miễn phí vận chuyển"
+            : "🎉 Đơn của bạn được <b>miễn phí vận chuyển</b>") +
+            '<div class="cd-bar"><i style="width:' + Math.min(100, total / SHOP.freeShipFrom * 100) + '%"></i></div>';
+    } else ship.hidden = true;
 
-    alert(
-        "🛒 GIỎ HÀNG\n\n" +
-        cartItems.map((item, i) => (i + 1) + ". " + item).join("\n") +
-        "\n\nTổng sản phẩm: " + cartCount
-    );
+    $("cdList").innerHTML = cartData.length ? cartData.map(i => {
+        const p = CATALOG[i.name];
+        const thumb = p.img ? '<img src="' + esc(p.img) + '" alt="">' : esc(p.emoji);
+        return '<div class="cd-item" data-name="' + esc(i.name) + '">' +
+            '<input type="checkbox" data-act="on" ' + (i.on ? "checked" : "") + ' aria-label="Chọn">' +
+            '<div class="cd-thumb">' + thumb + '</div>' +
+            '<div><div class="cd-name">' + esc(p.name) + '</div><div class="cd-price">' + money(p.price) + '</div>' +
+            '<div class="cd-qty"><button data-act="dec" aria-label="Giảm">−</button><span>' + i.qty + '</span><button data-act="inc" aria-label="Tăng">+</button></div></div>' +
+            '<button class="cd-del" data-act="del" aria-label="Xóa">🗑</button></div>';
+    }).join("") : '<div class="cd-empty"><div>🛒</div>Giỏ hàng đang trống<br>Hãy chọn món cho bé nhé 🐾</div>';
+
+    saveCart();
 }
 
+function lockShop(on) { document.body.classList.toggle("shop-lock", on); }
+
+function openCart() {
+    $("toast").classList.remove("show");
+    $("shopOverlay").classList.add("show");
+    $("cartDrawer").classList.add("show");
+    lockShop(true);
+}
+
+function closeShop() {
+    $("shopOverlay").classList.remove("show");
+    $("cartDrawer").classList.remove("show");
+    $("checkout").hidden = true;
+    lockShop(false);
+}
+
+let toastTimer;
+function toast(msg, withLink) {
+    const t = $("toast");
+    t.innerHTML = esc(msg) + (withLink ? ' <button id="toastCart">Xem giỏ</button>' : "");
+    t.classList.add("show");
+    const b = $("toastCart");
+    if (b) b.addEventListener("click", () => { t.classList.remove("show"); openCart(); });
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove("show"), 3000);
+}
+
+/* Thêm vào giỏ (được gọi từ nút "THÊM GIỎ HÀNG") */
+function addCart(name, ev) {
+    if (!CATALOG[name]) return;
+    const it = cartData.find(i => i.name === name);
+    if (it) { it.qty++; it.on = true; } else cartData.push({ name, qty: 1, on: true });
+    renderCart();
+
+    floatCart.classList.remove("shake");
+    void floatCart.offsetWidth;
+    floatCart.classList.add("shake");
+
+    if (ev && ev.currentTarget) createRipple(ev.currentTarget, ev);
+    createPetEffect(window.innerWidth - 80, window.innerHeight - 90, "🛒");
+    toast("✓ Đã thêm " + name + " vào giỏ hàng", true);
+}
+
+function showCart() { openCart(); }
+
+/* Sự kiện giỏ hàng */
+$("navCart").addEventListener("click", e => { e.preventDefault(); openCart(); });
+$("cdClose").addEventListener("click", closeShop);
+$("coClose").addEventListener("click", closeShop);
+$("shopOverlay").addEventListener("click", closeShop);
+$("cdMore").addEventListener("click", closeShop);
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeShop(); });
+
+$("cdAll").addEventListener("change", e => {
+    cartData.forEach(i => i.on = e.target.checked);
+    renderCart();
+});
+
+$("cdList").addEventListener("click", e => {
+    const btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    const row = btn.closest(".cd-item");
+    const it = cartData.find(i => i.name === row.dataset.name);
+    const act = btn.dataset.act;
+    if (!it) return;
+
+    if (act === "inc") it.qty = Math.min(99, it.qty + 1);
+    if (act === "dec") it.qty = Math.max(1, it.qty - 1);
+    if (act === "del") cartData = cartData.filter(i => i !== it);
+    if (act === "on") it.on = btn.checked;
+    renderCart();
+});
+
+/* ====== THANH TOÁN ====== */
+let coItems = [], coFromCart = false, voucher = null;
+
+const coMethod = () => document.querySelector('input[name="Hình thức nhận hàng"]:checked').value;
+const coPay = () => document.querySelector('input[name="Thanh toán"]:checked').value;
+
+function calcOrder() {
+    const sub = coItems.reduce((s, i) => s + i.price * i.qty, 0);
+    let ship = coMethod() === "Nhận tại cửa hàng" ? 0
+        : SHOP.shipFee === null ? null
+        : (SHOP.freeShipFrom > 0 && sub >= SHOP.freeShipFrom ? 0 : SHOP.shipFee);
+    let disc = 0;
+
+    if (voucher) {
+        if (voucher.type === "percent") disc = Math.round(sub * voucher.value / 100);
+        if (voucher.type === "amount") disc = Math.min(sub, voucher.value);
+        if (voucher.type === "freeship" && ship) ship = 0;
+    }
+    return { sub, ship, disc, total: sub - disc + (ship || 0) };
+}
+
+function renderCheckout() {
+    const pickup = coMethod() === "Nhận tại cửa hàng";
+    const addr = $("coAddr");
+    addr.hidden = pickup;
+    addr.disabled = pickup;
+    $("coPickup").hidden = !pickup;
+
+    $("coItems").innerHTML = coItems.map(i =>
+        '<div class="co-row"><span>' + i.qty + " × " + esc(i.name) + "</span><span>" + money(i.price * i.qty) + "</span></div>").join("");
+
+    const t = calcOrder();
+    $("coSums").innerHTML =
+        '<div class="co-row"><span>Tạm tính</span><span>' + money(t.sub) + "</span></div>" +
+        '<div class="co-row"><span>Phí vận chuyển</span><span>' + (t.ship === null ? "Shop báo khi xác nhận" : t.ship === 0 ? "Miễn phí" : money(t.ship)) + "</span></div>" +
+        (t.disc ? '<div class="co-row"><span>Giảm giá (' + esc(voucher.code) + ')</span><span>-' + money(t.disc) + "</span></div>" : "") +
+        '<div class="co-row big"><span>Tổng thanh toán</span><span>' + money(t.total) + "</span></div>";
+
+    const bank = $("coBank");
+    if (coPay() === "Chuyển khoản ngân hàng") {
+        bank.hidden = false;
+        bank.innerHTML = SHOP.bank.account
+            ? "Ngân hàng: <b>" + esc(SHOP.bank.bankId) + "</b><br>Số tài khoản: <b>" + esc(SHOP.bank.account) + "</b><br>Chủ tài khoản: <b>" + esc(SHOP.bank.accountName) + "</b><br>Mã QR kèm nội dung chuyển khoản sẽ hiện sau khi bạn đặt hàng."
+            : "Shop sẽ gửi thông tin chuyển khoản cho bạn khi xác nhận đơn.";
+    } else bank.hidden = true;
+
+    $("coVBox").style.display = Object.keys(VOUCHERS).length ? "" : "none";
+}
+
+function openCheckout(items, fromCart) {
+    coItems = items.map(i => ({ ...CATALOG[i.name], qty: i.qty }));
+    coFromCart = fromCart;
+    voucher = null;
+    $("coVoucher").value = "";
+    $("coVMsg").textContent = "";
+    $("coErr").classList.remove("show");
+    $("coForm").hidden = false;
+    $("coDone").hidden = true;
+    renderCheckout();
+    $("cartDrawer").classList.remove("show");
+    $("shopOverlay").classList.add("show");
+    $("checkout").hidden = false;
+    $("checkout").scrollTop = 0;
+    lockShop(true);
+}
+
+function buyNow(name) { openCheckout([{ name, qty: 1 }], false); }
+
+$("cdBuy").addEventListener("click", () => openCheckout(cartData.filter(i => i.on), true));
+
+$("coForm").addEventListener("change", e => { if (e.target.type === "radio") renderCheckout(); });
+
+$("coPhone").addEventListener("input", e => {
+    e.target.setCustomValidity(bkPhoneOk(e.target.value) ? "" : "Vui lòng nhập số điện thoại hợp lệ (VD: 0912345678)");
+});
+
+$("coApply").addEventListener("click", () => {
+    const code = $("coVoucher").value.trim().toUpperCase();
+    const v = VOUCHERS[code];
+    const sub = coItems.reduce((s, i) => s + i.price * i.qty, 0);
+    const msg = $("coVMsg");
+
+    if (!v) { voucher = null; msg.style.color = "#c0392b"; msg.textContent = "Mã giảm giá không hợp lệ."; }
+    else if (v.min && sub < v.min) { voucher = null; msg.style.color = "#c0392b"; msg.textContent = "Đơn hàng tối thiểu " + money(v.min) + " để dùng mã này."; }
+    else { voucher = { ...v, code }; msg.style.color = "#27ae60"; msg.textContent = "✓ Đã áp dụng mã " + code; }
+    renderCheckout();
+});
+
+$("coForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const btn = $("coSubmit");
+    const form = e.target;
+    const t = calcOrder();
+    const code = "DH-" + bkToday().slice(5).replace("-", "") + "-" + (100 + Math.floor(Math.random() * 900));
+    const fd = new FormData(form);
+    const name = fd.get("Họ tên");
+    const transfer = coPay() === "Chuyển khoản ngân hàng";
+
+    if (coMethod() === "Nhận tại cửa hàng") fd.set("Địa chỉ", "Nhận tại cửa hàng (42 Lê Hồng Phong, Hội An)");
+
+    fd.set("Mã đơn hàng", code);
+    fd.set("Sản phẩm", coItems.map(i => i.qty + " x " + i.name + " (" + money(i.price) + ")").join(" | "));
+    fd.set("Tạm tính", money(t.sub));
+    fd.set("Phí ship", t.ship === null ? "Shop báo sau" : money(t.ship));
+    if (voucher) fd.set("Mã giảm giá", voucher.code + " (-" + money(t.disc) + ")");
+    fd.set("Tổng thanh toán", money(t.total) + (t.ship === null ? " (chưa gồm phí ship)" : ""));
+    fd.set("_subject", "🛒 Đơn hàng mới " + code + " - " + name + " - " + money(t.total));
+
+    $("coErr").classList.remove("show");
+    btn.disabled = true;
+    btn.textContent = "⏳ Đang gửi đơn...";
+
+    fetch("https://formsubmit.co/ajax/linhyenthivo957@gmail.com", {
+        method: "POST", headers: { "Accept": "application/json" }, body: fd
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (String(data.success) !== "true") throw new Error(data.message);
+
+        if (coFromCart) {
+            const names = coItems.map(i => i.name);
+            cartData = cartData.filter(i => !names.includes(i.name));
+            renderCart();
+        }
+
+        const qr = transfer && SHOP.bank.account
+            ? '<img class="qr" alt="Mã QR chuyển khoản" src="https://img.vietqr.io/image/' + encodeURIComponent(SHOP.bank.bankId) + "-" + encodeURIComponent(SHOP.bank.account) +
+              "-compact2.png?amount=" + t.total + "&addInfo=" + encodeURIComponent(code) + "&accountName=" + encodeURIComponent(SHOP.bank.accountName) + '">' +
+              '<div class="co-note">Quét mã để chuyển khoản <b>' + money(t.total) + "</b>, nội dung: <b>" + esc(code) + "</b></div>"
+            : transfer ? '<div class="co-note">Shop sẽ gửi thông tin chuyển khoản cho bạn khi xác nhận đơn.</div>' : "";
+
+        $("coDone").innerHTML =
+            '<div class="bk-check" style="margin:auto">✓</div><h3>Đặt hàng thành công! 🎉</h3>' +
+            '<div class="co-code">Mã đơn hàng: <b>' + esc(code) + "</b></div>" +
+            '<div style="text-align:left">' + coItems.map(i => '<div class="co-row"><span>' + i.qty + " × " + esc(i.name) + "</span><span>" + money(i.price * i.qty) + "</span></div>").join("") +
+            '<div class="co-row big"><span>Tổng thanh toán</span><span>' + money(t.total) + "</span></div></div>" + qr +
+            '<div class="co-note">Shop sẽ liên hệ xác nhận đơn qua số <b>' + esc(fd.get("Số điện thoại")) + "</b>. Bạn nhớ giữ lại mã đơn hàng nhé.</div>" +
+            '<div class="co-acts"><a href="https://zalo.me/' + SHOP.zalo + '" target="_blank" rel="noopener">💬 Nhắn Zalo cho shop</a><button type="button" id="coAgain">🛍️ Tiếp tục mua sắm</button></div>';
+
+        $("coForm").hidden = true;
+        $("coDone").hidden = false;
+        $("checkout").scrollTop = 0;
+        $("coAgain").addEventListener("click", closeShop);
+        form.reset();
+
+        ["🐶", "🐱", "🐾", "❤️", "🎉"].forEach((p, i) =>
+            setTimeout(() => createPetEffect(window.innerWidth / 2, window.innerHeight / 2, p), i * 100));
+    })
+    .catch(() => $("coErr").classList.add("show"))
+    .finally(() => { btn.disabled = false; btn.textContent = "ĐẶT HÀNG"; });
+});
+
+renderCart();
+
 /* =========================
-   ĐẶT LỊCH
+   ĐẶT LỊCH (form nhiều bước)
 ========================= */
+
+/* Giá bắt đầu của từng dịch vụ (đơn vị: đồng).
+   Điền số vào để web hiển thị giá và tạm tính, ví dụ: 150000
+   Để 0 nếu chưa muốn hiện giá (shop sẽ báo giá khi xác nhận). */
+const BOOKING_SERVICES = {
+    "Cắt tỉa & tạo kiểu": 0,
+    "Tắm & Spa": 0,
+    "Làm đẹp": 0,
+    "Khách sạn thú cưng": 0   // giá mỗi đêm
+};
+
+const bkForm = document.getElementById("bookingForm");
+let bkStep = 1;
+
+function bkMoney(n) { return n.toLocaleString("vi-VN") + "đ"; }
+
+function bkToday() {
+    const d = new Date();
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+
+function bkAddDays(str, n) {
+    const d = new Date(str + "T00:00:00");
+    d.setDate(d.getDate() + n);
+    return new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+}
+
+function bkFmtDate(str) {
+    if (!str) return "";
+    const p = str.split("-");
+    return p[2] + "/" + p[1] + "/" + p[0];
+}
+
+function bkPhoneOk(v) {
+    return /^(0|\+?84)(3|5|7|8|9)\d{8}$/.test(v.replace(/[\s.\-]/g, ""));
+}
+
+function bkSelectedServices() {
+    return Array.from(bkForm.querySelectorAll('input[name="Dịch vụ"]:checked')).map(i => i.value);
+}
+
+/* Danh sách khung giờ: 08:00 -> 20:00, tự khóa giờ đã qua nếu chọn hôm nay */
+function bkBuildSlots() {
+    const sel = document.getElementById("bkTime");
+    const date = document.getElementById("bkDate").value;
+    const isToday = date === bkToday();
+    const nowHour = new Date().getHours();
+    const keep = sel.value;
+
+    sel.innerHTML = '<option value="">-- Chọn khung giờ --</option>';
+
+    for (let h = 8; h <= 20; h++) {
+        const t = String(h).padStart(2, "0") + ":00";
+        const o = document.createElement("option");
+        o.value = t;
+        o.textContent = t;
+        if (isToday && h <= nowHour) o.disabled = true;
+        sel.appendChild(o);
+    }
+
+    if (keep) {
+        const o = sel.querySelector('option[value="' + keep + '"]');
+        if (o && !o.disabled) sel.value = keep;
+    }
+}
+
+function bkNights() {
+    const d = document.getElementById("bkDate").value;
+    const o = document.getElementById("bkDateOut").value;
+    const el = document.getElementById("bkNights");
+    let n = 0;
+
+    if (d && o) n = Math.round((new Date(o) - new Date(d)) / 86400000);
+
+    el.textContent = n > 0 ? "Số đêm: " + n : "";
+    el.dataset.n = n > 0 ? String(n) : "";
+}
+
+function bkUpdateServices() {
+    const sel = bkSelectedServices();
+    const hotel = sel.includes("Khách sạn thú cưng");
+    const out = document.getElementById("bkDateOut");
+
+    document.getElementById("bkHotel").classList.toggle("show", hotel);
+    out.required = hotel;
+    if (!hotel) out.value = "";
+
+    bkNights();
+    document.getElementById("bkServiceErr").classList.remove("show");
+
+    const est = document.getElementById("bkEstimate");
+
+    if (sel.length && sel.every(s => BOOKING_SERVICES[s] > 0)) {
+        const nights = Number(document.getElementById("bkNights").dataset.n) || 1;
+        const total = sel.reduce((sum, s) =>
+            sum + BOOKING_SERVICES[s] * (s === "Khách sạn thú cưng" ? nights : 1), 0);
+
+        est.textContent = "💰 Tạm tính: từ " + bkMoney(total) + " (giá chính thức do shop xác nhận)";
+        est.classList.add("show");
+    } else {
+        est.classList.remove("show");
+    }
+}
+
+function bkInit() {
+    const date = document.getElementById("bkDate");
+    const out = document.getElementById("bkDateOut");
+
+    date.min = bkToday();
+    out.min = bkAddDays(date.value || bkToday(), 1);
+    bkBuildSlots();
+
+    document.querySelectorAll(".bk-service").forEach(label => {
+        const name = label.querySelector("input").value;
+        const price = BOOKING_SERVICES[name];
+        label.querySelector("em").textContent = price > 0
+            ? "Từ " + bkMoney(price) + (name === "Khách sạn thú cưng" ? " / đêm" : "")
+            : "Shop báo giá khi xác nhận";
+    });
+}
+
+function bkShow(step) {
+    bkStep = step;
+
+    bkForm.querySelectorAll(".bk-step").forEach(s =>
+        s.classList.toggle("active", Number(s.dataset.step) === step));
+
+    document.querySelectorAll(".bk-dot").forEach(d => {
+        const n = Number(d.dataset.step);
+        d.classList.toggle("active", n === step);
+        d.classList.toggle("done", n < step);
+    });
+
+    document.getElementById("bkBack").hidden = step === 1;
+    document.getElementById("bkNext").hidden = step === 3;
+    document.getElementById("bkSubmit").hidden = step !== 3;
+
+    if (step === 3) bkFill(document.getElementById("bkSummary"));
+}
+
+function bkScroll() {
+    const el = document.querySelector(".bk-progress");
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function bkValidateStep(step) {
+    const box = bkForm.querySelector('.bk-step[data-step="' + step + '"]');
+    const phone = document.getElementById("bkPhone");
+
+    phone.setCustomValidity(
+        bkPhoneOk(phone.value) ? "" : "Vui lòng nhập số điện thoại hợp lệ (VD: 0912345678)"
+    );
+
+    for (const f of box.querySelectorAll("input, select, textarea")) {
+        if (f.type === "hidden" || f.offsetParent === null) continue;
+
+        if (!f.checkValidity()) {
+            f.reportValidity();
+            return false;
+        }
+    }
+
+    if (step === 2 && bkSelectedServices().length === 0) {
+        const err = document.getElementById("bkServiceErr");
+        err.classList.add("show");
+        err.scrollIntoView({ behavior: "smooth", block: "center" });
+        return false;
+    }
+
+    return true;
+}
+
+function bkRow(parent, label, value) {
+    if (!value) return;
+    const row = document.createElement("div");
+    const b = document.createElement("b");
+    const s = document.createElement("span");
+    b.textContent = label + ":";
+    s.textContent = value;
+    row.append(b, s);
+    parent.appendChild(row);
+}
+
+/* Điền bảng tóm tắt (dùng textContent nên không lo chèn mã độc) */
+function bkFill(container) {
+    container.textContent = "";
+    const fd = new FormData(bkForm);
+    const date = fd.get("Ngày hẹn");
+    const time = fd.get("Khung giờ");
+
+    bkRow(container, "Khách hàng", fd.get("Tên khách hàng"));
+    bkRow(container, "Số điện thoại", fd.get("Số điện thoại"));
+    bkRow(container, "Thú cưng", [fd.get("Loại thú cưng"), fd.get("Tên thú cưng"), fd.get("Giống")].filter(Boolean).join(" • "));
+    bkRow(container, "Cân nặng", fd.get("Cân nặng"));
+    bkRow(container, "Dịch vụ", bkSelectedServices().join(", "));
+    bkRow(container, "Lịch hẹn", date ? (time ? time + " - " : "") + bkFmtDate(date) : "");
+    if (fd.get("Ngày trả")) bkRow(container, "Ngày trả", bkFmtDate(fd.get("Ngày trả")));
+}
+
+function bkReset() {
+    bkForm.reset();
+    document.getElementById("bookingDone").hidden = true;
+    document.getElementById("bkSubmitErr").classList.remove("show");
+    bkForm.hidden = false;
+    bkInit();
+    bkUpdateServices();
+    bkShow(1);
+    document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
+}
+
+/* Sự kiện */
+document.getElementById("bkNext").addEventListener("click", () => {
+    if (bkValidateStep(bkStep)) {
+        bkShow(bkStep + 1);
+        bkScroll();
+    }
+});
+
+document.getElementById("bkBack").addEventListener("click", () => {
+    bkShow(bkStep - 1);
+    bkScroll();
+});
+
+/* Nhấn Enter ở bước 1, 2 thì sang bước tiếp theo thay vì gửi form */
+bkForm.addEventListener("keydown", e => {
+    if (e.key === "Enter" && e.target.tagName !== "TEXTAREA" && bkStep < 3) {
+        e.preventDefault();
+        document.getElementById("bkNext").click();
+    }
+});
+
+bkForm.addEventListener("change", e => {
+    const t = e.target;
+
+    if (t.name === "Dịch vụ") bkUpdateServices();
+
+    if (t.id === "bkDate") {
+        const out = document.getElementById("bkDateOut");
+        out.min = bkAddDays(t.value || bkToday(), 1);
+        if (out.value && out.value < out.min) out.value = "";
+        bkBuildSlots();
+        bkUpdateServices();
+    }
+
+    if (t.id === "bkDateOut") bkUpdateServices();
+});
+
+bkInit();
+bkUpdateServices();
+bkShow(1);
+
+/* Gửi lịch hẹn */
 function bookingSuccess(event) {
     event.preventDefault();
 
-    const form = event.target;
-    const button = event.submitter || form.querySelector("button");
-    const oldText = button ? button.innerHTML : "";
-
-    if (button) {
-        button.disabled = true;
-        button.innerHTML = "⏳ Đang gửi...";
+    /* Kiểm tra lại cả 3 bước, dừng ở bước nào bị lỗi */
+    for (let s = 1; s <= 3; s++) {
+        bkShow(s);
+        if (!bkValidateStep(s)) return;
     }
+
+    const button = document.getElementById("bkSubmit");
+    const oldText = button.innerHTML;
+    const errBox = document.getElementById("bkSubmitErr");
+
+    errBox.classList.remove("show");
+    button.disabled = true;
+    button.innerHTML = "⏳ Đang gửi...";
+
+    const fd = new FormData(bkForm);
+
+    /* Gộp các ô tích chọn thành một dòng cho mail dễ đọc */
+    ["Dịch vụ", "Lưu ý về thú cưng"].forEach(name => {
+        const values = fd.getAll(name);
+        fd.delete(name);
+        fd.set(name, values.length ? values.join(", ") : "Không có");
+    });
+
+    if (!fd.get("email")) fd.delete("email");
+
+    const nights = document.getElementById("bkNights").dataset.n;
+    if (nights) fd.set("Số đêm", nights);
+
+    const code = "DP-" + bkToday().slice(5).replace("-", "") + "-" + (100 + Math.floor(Math.random() * 900));
+    const date = fd.get("Ngày hẹn");
+    const time = fd.get("Khung giờ");
+    const pet = fd.get("Tên thú cưng");
+    const services = fd.get("Dịch vụ");
+
+    fd.set("Mã lịch hẹn", code);
+    fd.set("_subject", "🐾 Lịch mới " + code + ": " + pet + " - " + services + " - " +
+        bkFmtDate(date).slice(0, 5) + " " + time);
 
     fetch("https://formsubmit.co/ajax/linhyenthivo957@gmail.com", {
         method: "POST",
         headers: { "Accept": "application/json" },
-        body: new FormData(form)
+        body: fd
     })
     .then(res => res.json())
     .then(data => {
         if (String(data.success) !== "true") throw new Error(data.message);
 
-        if (button) {
-            button.innerHTML = oldText;
-            button.classList.remove("success");
-            void button.offsetWidth;
-            button.classList.add("success");
-            createRipple(button, event);
-        }
+        /* Điền màn hình xác nhận */
+        document.getElementById("bkDonePet").textContent = pet;
+        document.getElementById("bkDoneCode").textContent = code;
+        document.getElementById("bkDonePhone").textContent = fd.get("Số điện thoại");
+        bkFill(document.getElementById("bkDoneSummary"));
+
+        /* Link thêm vào Google Calendar */
+        const d = date.replace(/-/g, "");
+        const start = d + "T" + time.replace(":", "") + "00";
+        const end = d + "T" + String(parseInt(time, 10) + 1).padStart(2, "0") + "0000";
+
+        document.getElementById("bkCalLink").href =
+            "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+            "&text=" + encodeURIComponent("Diamonds Pet World - " + services + " (" + pet + ") - chờ shop xác nhận") +
+            "&dates=" + start + "/" + end +
+            "&ctz=Asia/Ho_Chi_Minh" +
+            "&details=" + encodeURIComponent("Mã lịch hẹn: " + code + "\nShop sẽ liên hệ xác nhận qua SĐT " + fd.get("Số điện thoại")) +
+            "&location=" + encodeURIComponent("42 Lê Hồng Phong, Hội An");
+
+        bkForm.hidden = true;
+        document.getElementById("bookingDone").hidden = false;
+        document.getElementById("booking").scrollIntoView({ behavior: "smooth" });
 
         const x = window.innerWidth / 2;
         const y = window.innerHeight / 2;
-        ["🐶", "🐱", "🐾", "❤️", "🎉"].forEach((pet, index) => {
-            setTimeout(() => createPetEffect(x, y, pet), index * 100);
+        ["🐶", "🐱", "🐾", "❤️", "🎉"].forEach((p, i) => {
+            setTimeout(() => createPetEffect(x, y, p), i * 100);
         });
-
-        form.reset();
-
-        setTimeout(() => {
-            alert(
-                "🎉 ĐẶT LỊCH THÀNH CÔNG!\n\n" +
-                "🐾 Diamonds Pet World sẽ liên hệ với bạn để xác nhận lịch."
-            );
-        }, 500);
     })
     .catch(() => {
-        if (button) button.innerHTML = oldText;
-        alert("😿 Gửi không thành công. Vui lòng thử lại hoặc liên hệ trực tiếp với shop nhé!");
+        errBox.classList.add("show");
     })
     .finally(() => {
-        if (button) button.disabled = false;
+        button.disabled = false;
+        button.innerHTML = oldText;
     });
 }
 
